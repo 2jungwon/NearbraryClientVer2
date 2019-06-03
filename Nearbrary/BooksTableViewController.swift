@@ -32,6 +32,7 @@ class BooksTableViewController: UITableViewController, XMLParserDelegate {
     var currentTag: String? = ""
     var currentElement: String = ""
     var item : book? = nil
+    var selectBook: book? = nil
     
     var start = 1
     @IBAction func more(_ sender: Any) {
@@ -177,7 +178,17 @@ class BooksTableViewController: UITableViewController, XMLParserDelegate {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let book = books[indexPath.row]
-        NSLog("선택된 행은 \(indexPath.row) 번째 행입니다")
-        NSLog("\(book.title!)")
+        //NSLog("선택된 행은 \(indexPath.row) 번째 행입니다")
+        //NSLog("\(book.title!)")
+        selectBook = book
+        performSegue(withIdentifier: "detailSegue", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let detailVC = segue.destination as? DetailViewController {
+            if let sendBook = selectBook {
+                detailVC.selectedBook = sendBook
+            }
+        }
     }
 }

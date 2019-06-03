@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E247E9422A57CD5002810B3 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E247E9322A57CD5002810B3 /* DetailViewController.swift */; };
 		9A3630D622913CAD00DD9E6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3630D522913CAD00DD9E6A /* AppDelegate.swift */; };
 		9A3630DB22913CAD00DD9E6A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A3630D922913CAD00DD9E6A /* Main.storyboard */; };
 		9A3630DD22913CAF00DD9E6A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A3630DC22913CAF00DD9E6A /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5E247E9322A57CD5002810B3 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		9A3630D222913CAD00DD9E6A /* Nearbrary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nearbrary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A3630D522913CAD00DD9E6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A3630DA22913CAD00DD9E6A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 			children = (
 				9A3630D522913CAD00DD9E6A /* AppDelegate.swift */,
 				9A3630D922913CAD00DD9E6A /* Main.storyboard */,
+				5E247E9322A57CD5002810B3 /* DetailViewController.swift */,
 				9A3630EF22916EEB00DD9E6A /* BooksTableViewCell.swift */,
 				9A3630ED22915B6800DD9E6A /* BooksTableViewController.swift */,
 				9A3630EB2291547600DD9E6A /* Model.swift */,
@@ -147,6 +150,7 @@
 				9A3630EC2291547600DD9E6A /* Model.swift in Sources */,
 				9A3630EA22913DE000DD9E6A /* SearchViewController.swift in Sources */,
 				9A3630EE22915B6800DD9E6A /* BooksTableViewController.swift in Sources */,
+				5E247E9422A57CD5002810B3 /* DetailViewController.swift in Sources */,
 				9A3630D622913CAD00DD9E6A /* AppDelegate.swift in Sources */,
 				9A3630F022916EEB00DD9E6A /* BooksTableViewCell.swift in Sources */,
 			);

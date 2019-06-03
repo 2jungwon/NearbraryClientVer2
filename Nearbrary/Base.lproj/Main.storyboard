@@ -237,11 +237,171 @@
                     <navigationItem key="navigationItem" title="책 검색 결과" id="I9K-eW-3gK"/>
                     <connections>
                         <outlet property="titleNavigationItem" destination="I9K-eW-3gK" id="fE6-8C-qBD"/>
+                        <segue destination="pLw-h9-JqN" kind="show" identifier="detailSegue" id="k8a-53-pos"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UEJ-lM-ISH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1541.5999999999999" y="686.80659670164926"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="zUw-qa-4uU">
+            <objects>
+                <viewController id="pLw-h9-JqN" customClass="DetailViewController" customModule="Nearbrary" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jQY-0g-rh8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="책 상세정보" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yNv-u7-PGb">
+                                <rect key="frame" x="10" y="74" width="355" height="20.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20.5" id="VQv-dw-2D7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="44" translatesAutoresizingMaskIntoConstraints="NO" id="Bfq-PZ-iGL">
+                                <rect key="frame" x="10" y="102" width="355" height="150"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="u29-sw-MK6">
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="150"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Dp9-PV-oLM">
+                                                <rect key="frame" x="0.0" y="0.0" width="125" height="150"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="125" id="AGd-Ot-Zfs"/>
+                                                </constraints>
+                                            </imageView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="6FV-NE-iAO">
+                                                <rect key="frame" x="135" y="0.0" width="220" height="150"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="여행의 이유" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q7U-SS-fv2" userLabel="책 제목">
+                                                        <rect key="frame" x="0.0" y="0.0" width="78" height="37"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="37" id="Lfs-0R-Rhp"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Or4-1l-cve">
+                                                        <rect key="frame" x="0.0" y="45" width="199.5" height="105"/>
+                                                        <subviews>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="uxS-bN-7ZF" userLabel="Author Stack View">
+                                                                <rect key="frame" x="0.0" y="0.0" width="199.5" height="105"/>
+                                                                <subviews>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="0gj-bp-T3Y">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="39" height="105"/>
+                                                                        <subviews>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="저자" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZTF-5G-Q1r">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="39" height="21"/>
+                                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="출판사" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KVb-UX-azA">
+                                                                                <rect key="frame" x="0.0" y="21" width="39" height="21"/>
+                                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="출간일" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GCR-f7-7pw">
+                                                                                <rect key="frame" x="0.0" y="42" width="39" height="21"/>
+                                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ISBN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DmV-Sq-sWx">
+                                                                                <rect key="frame" x="0.0" y="63" width="39" height="21"/>
+                                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="더보기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rEa-pM-s6R">
+                                                                                <rect key="frame" x="0.0" y="84" width="39" height="21"/>
+                                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                        </subviews>
+                                                                    </stackView>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="hqg-sa-uS6">
+                                                                        <rect key="frame" x="49" y="0.0" width="150.5" height="105"/>
+                                                                        <subviews>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="김영하" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rgN-6O-xTP" userLabel="Author Label">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="150.5" height="21"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                                <nil key="textColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="문학동네" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HVe-3a-Nbx" userLabel="Publisher Label">
+                                                                                <rect key="frame" x="0.0" y="21" width="150.5" height="21"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                                <nil key="textColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2019.04.17" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HT2-7K-9oX" userLabel="Pubdate Label">
+                                                                                <rect key="frame" x="0.0" y="42" width="150.5" height="21"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                                <nil key="textColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9788954655972" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4pi-8R-8CK" userLabel="ISBN Label">
+                                                                                <rect key="frame" x="0.0" y="63" width="150.5" height="21"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                                <nil key="textColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="http://book.naver.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FVt-Iz-TO2" userLabel="Link Label">
+                                                                                <rect key="frame" x="0.0" y="84" width="150.5" height="21"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                                <nil key="textColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                        </subviews>
+                                                                    </stackView>
+                                                                </subviews>
+                                                            </stackView>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="Or4-1l-cve" firstAttribute="top" secondItem="Q7U-SS-fv2" secondAttribute="bottom" constant="8" id="O9k-oS-umw"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="wd7-cU-sjm"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="yNv-u7-PGb" firstAttribute="leading" secondItem="3bp-UC-0Qt" secondAttribute="leading" constant="10" id="AHt-UB-goX"/>
+                            <constraint firstItem="Bfq-PZ-iGL" firstAttribute="leading" secondItem="3bp-UC-0Qt" secondAttribute="leading" constant="10" id="CPz-v9-ccO"/>
+                            <constraint firstItem="Bfq-PZ-iGL" firstAttribute="top" secondItem="yNv-u7-PGb" secondAttribute="bottom" constant="7.5" id="Krj-Z5-BaN"/>
+                            <constraint firstItem="3bp-UC-0Qt" firstAttribute="trailing" secondItem="yNv-u7-PGb" secondAttribute="trailing" constant="10" id="bXb-28-a06"/>
+                            <constraint firstItem="yNv-u7-PGb" firstAttribute="top" secondItem="3bp-UC-0Qt" secondAttribute="top" constant="10" id="eL3-3C-45M"/>
+                            <constraint firstItem="3bp-UC-0Qt" firstAttribute="trailing" secondItem="Bfq-PZ-iGL" secondAttribute="trailing" constant="10" id="qVT-fg-63K"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="3bp-UC-0Qt"/>
+                    </view>
+                    <connections>
+                        <outlet property="author" destination="rgN-6O-xTP" id="jLt-TD-RVv"/>
+                        <outlet property="bookImageView" destination="Dp9-PV-oLM" id="hxY-59-xYy"/>
+                        <outlet property="booktitle" destination="Q7U-SS-fv2" id="cpD-xz-zdx"/>
+                        <outlet property="isbn" destination="4pi-8R-8CK" id="RV8-AG-0xd"/>
+                        <outlet property="link" destination="FVt-Iz-TO2" id="xrQ-bq-Da2"/>
+                        <outlet property="pubdate" destination="HT2-7K-9oX" id="rhu-DG-kk1"/>
+                        <outlet property="publisher" destination="HVe-3a-Nbx" id="dgu-Zs-YUA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5KS-ht-0xr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2245.5999999999999" y="686.80659670164926"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="lcG-gJ-KAt">
@@ -258,6 +418,7 @@
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Qq-A3-t9A" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationItem title="책 검색 결과" id="pEk-r2-hn4"/>
             </objects>
             <point key="canvasLocation" x="52" y="686.80659670164926"/>
         </scene>
