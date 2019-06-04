@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import SafariServices
 
 class DetailViewController: UIViewController {
     
@@ -18,8 +19,12 @@ class DetailViewController: UIViewController {
     @IBOutlet var publisher: UILabel!
     @IBOutlet var pubdate: UILabel!
     @IBOutlet var isbn: UILabel!
-    @IBOutlet var link: UILabel!
     @IBOutlet var bookImageView: UIImageView!
+    @IBAction func NaverLink(_ sender: UIButton) {
+        let url = URL(string: selectedBook?.link ?? "")!
+        let webVC = SFSafariViewController(url: url)
+        present(webVC, animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +34,7 @@ class DetailViewController: UIViewController {
         pubdate.text = selectedBook?.pubdate
         let cut_isbn = selectedBook?.isbn?.components(separatedBy: " ")
         isbn.text = cut_isbn?[1]
-        link.text = selectedBook?.link
+        //link.text = selectedBook?.link
         bookImageView.image = selectedBook?.image
     }
 }
