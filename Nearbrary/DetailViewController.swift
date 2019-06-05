@@ -34,7 +34,6 @@ class DetailViewController: UIViewController {
         pubdate.text = selectedBook?.pubdate
         let cut_isbn = selectedBook?.isbn?.components(separatedBy: " ")
         isbn.text = cut_isbn?[1]
-        //link.text = selectedBook?.link
         bookImageView.image = selectedBook?.image
     }
 }
