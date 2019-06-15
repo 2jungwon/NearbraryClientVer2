@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 import SafariServices
 
-class DetailViewController: UIViewController {
+class DetailViewController: UITableViewController {
     
     var selectedBook : book? = nil
     
