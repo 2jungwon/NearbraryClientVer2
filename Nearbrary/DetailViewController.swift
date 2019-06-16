@@ -34,12 +34,12 @@ class DetailViewController: UITableViewController {
     }
     
     struct BookInfo: Decodable {
-        let no: String
-        let location: String
-        let callno: String
-        let id: String
-        let status: String
-        let returndate: String
+        let no: String?
+        let location: String?
+        let callno: String?
+        let id: String?
+        let status: String?
+        let returndate: String?
     }
     
     struct cellData{
@@ -162,18 +162,27 @@ class DetailViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dataIndex = indexPath.row - 1
         if indexPath.row == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell")else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell_header")as! LibInfoHeaderCell? else {
                 return UITableViewCell()
             }
-            cell.textLabel?.text = tableViewData[indexPath.section].title
+            cell.univ.text = tableViewData[indexPath.section].title
             return cell
         }
         else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell")else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell_content")as! LibInfoContentCell? else {
                 return UITableViewCell()
             }
             let bookinfo : BookInfo = tableViewData[indexPath.section].sectionData[dataIndex]
-            cell.textLabel?.text = bookinfo.no + " " + bookinfo.status
+            guard let location = bookinfo.location, let callno = bookinfo.callno, let id = bookinfo.id, let returndate = bookinfo.returndate, let status = bookinfo.status else {
+                return cell
+            }
+            
+            cell.location.text = "\(location)"
+            cell.callno.text = "\(callno)"
+            cell.id.text = "\(id)"
+            cell.returndate.text = "\(returndate)"
+            cell.status.text = "\(status)"
+            
             return cell
         }
     }
