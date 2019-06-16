@@ -26,6 +26,102 @@ class DetailViewController: UITableViewController {
         present(webVC, animated: true, completion: nil)
     }
     
+    struct AllInfo: Decodable {
+        let sogang: [BookInfo]
+        let yonsei: [BookInfo]
+        let ewha: [BookInfo]
+        let hongik: [BookInfo]
+    }
+    
+    struct BookInfo: Decodable {
+        let no: String
+        let location: String
+        let callno: String
+        let id: String
+        let status: String
+        let returndate: String
+    }
+    
+    struct cellData{
+        var opened = Bool()
+        var title = String()
+        var sectionData = [BookInfo]()
+        
+        init(opened:Bool, title:String, sectionData:[BookInfo]){
+            self.opened = opened
+            self.title = title
+            self.sectionData = sectionData
+        }
+    }
+    var tableViewData = [cellData]()
+    var flag:Bool = true
+    var allinfo:AllInfo?
+    
+    func getBookInfoFromLibrary() {
+        let lambda_url = "https://kw7eq88ls8.execute-api.ap-northeast-2.amazonaws.com/Prod/libinfo?isbn="
+        
+        if self.selectedBook!.isbn == nil {
+            NSLog("There is no ISBN for this book")
+            return;
+        }
+        
+        let isbns = selectedBook?.isbn?.components(separatedBy: " ")
+        //let len10 = String(isbns?[0] ?? "")
+        let len13 = String(isbns?[1] ?? "")
+        
+        NSLog("len10:\(String(describing: isbns?[0])) + || + len13:\(String(describing: isbns?[1]))")
+        //guard let url_len10 = URL(string: lambda_url + len10) else{return}
+        guard let url_len13 = URL(string: lambda_url + len13) else{return}
+        
+        if len13 != "" {
+            URLSession.shared.dataTask(with: url_len13) { (data, response, err) in
+                NSLog("len13url : \(url_len13)")
+                guard let data = data else {return}
+                if data.isEmpty{
+                    NSLog("There's No data responsed from Libraries ISBN Number:\(len13)")
+                }
+                else {
+                    do {
+                        let allinfo = try JSONDecoder().decode(AllInfo.self, from: data)
+                        
+                        DispatchQueue.main.async {
+                            self.allinfo = allinfo
+                            print("\(self.allinfo?.sogang.count as Optional)")
+                            print("\(self.allinfo?.yonsei.count as Optional)")
+                            print("\(self.allinfo?.ewha.count as Optional)")
+                            print("\(self.allinfo?.hongik.count as Optional)")
+                            
+                            if self.allinfo?.sogang.count ?? 0 > 0 {
+                                self.allinfo?.sogang.forEach{ book in
+                                    self.tableViewData[0].sectionData.append(book)
+                                }
+                            }
+                            if self.allinfo?.yonsei.count ?? 0 > 0 {
+                                self.allinfo?.yonsei.forEach{ book in
+                                    self.tableViewData[1].sectionData.append(book)
+                                }
+                            }
+                            if self.allinfo?.ewha.count ?? 0 > 0 {
+                                self.allinfo?.ewha.forEach{ book in
+                                    self.tableViewData[2].sectionData.append(book)
+                                }
+                            }
+                            if self.allinfo?.hongik.count ?? 0 > 0 {
+                                self.allinfo?.hongik.forEach{ book in
+                                    self.tableViewData[3].sectionData.append(book)
+                                }
+                            }
+                            
+                            self.tableView.reloadData()
+                        }
+                    } catch let jsonErr {
+                        print("Error", jsonErr)
+                    }
+                }
+            }.resume()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         booktitle.text = selectedBook?.title
@@ -36,5 +132,63 @@ class DetailViewController: UITableViewController {
         isbn.text = cut_isbn?[1]
         //link.text = selectedBook?.link
         bookImageView.image = selectedBook?.image
+        
+        tableViewData = [
+            cellData(opened: false, title: "서강대학교", sectionData: []),
+            cellData(opened: false, title: "연세대학교", sectionData: []),
+            cellData(opened: false, title: "이화여자대학교", sectionData: []),
+            cellData(opened: false, title: "홍익대학교", sectionData: [])
+        ]
+        getBookInfoFromLibrary()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return self.tableViewData.count
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableViewData[section].opened == true {
+            return tableViewData[section].sectionData.count + 1
+        }
+        else {
+            return 1
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let dataIndex = indexPath.row - 1
+        if indexPath.row == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell")else {
+                return UITableViewCell()
+            }
+            cell.textLabel?.text = tableViewData[indexPath.section].title
+            return cell
+        }
+        else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell")else {
+                return UITableViewCell()
+            }
+            let bookinfo : BookInfo = tableViewData[indexPath.section].sectionData[dataIndex]
+            cell.textLabel?.text = bookinfo.no + " " + bookinfo.status
+            return cell
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            if self.tableViewData[indexPath.section].opened == true {
+                self.tableViewData[indexPath.section].opened = false
+                let sections = IndexSet.init(integer: indexPath.section)
+                tableView.reloadSections(sections, with: .none)
+            } else {
+                self.tableViewData[indexPath.section].opened = true
+                let sections = IndexSet.init(integer: indexPath.section)
+                tableView.reloadSections(sections, with: .none)
+            }
+        }
     }
 }
