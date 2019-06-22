@@ -182,7 +182,15 @@ class DetailViewController: UITableViewController {
             cell.id.text = "\(id)"
             cell.returndate.text = "\(returndate)"
             cell.status.text = "\(status)"
-            
+            if "\(status)"=="대출중" {
+                cell.status.textColor=UIColor.orange
+            }
+            else if "\(status)"=="대출가능" {
+                cell.status.textColor=UIColor.colorWithRGBHex(hex: 0x00994c, alpha: 1.0)
+            }
+            else {
+                cell.status.textColor=UIColor.red
+            }
             return cell
         }
     }
@@ -199,5 +207,15 @@ class DetailViewController: UITableViewController {
                 tableView.reloadSections(sections, with: .none)
             }
         }
+    }
+}
+
+extension UIColor {
+    class func colorWithRGBHex(hex: Int, alpha: Float = 1.0) -> UIColor {
+        let r = Float((hex >> 16) & 0xFF)
+        let g = Float((hex >> 8) & 0xFF)
+        let b = Float((hex) & 0xFF)
+        
+        return UIColor(red: CGFloat(r / 255.0), green: CGFloat(g / 255.0), blue:CGFloat(b / 255.0), alpha: CGFloat(alpha))
     }
 }
