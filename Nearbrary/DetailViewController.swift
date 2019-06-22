@@ -46,6 +46,7 @@ class DetailViewController: UITableViewController {
         var opened = Bool()
         var title = String()
         var sectionData = [BookInfo]()
+        var univ = String()//의미없는듯
         
         init(opened:Bool, title:String, sectionData:[BookInfo]){
             self.opened = opened
@@ -53,6 +54,22 @@ class DetailViewController: UITableViewController {
             self.sectionData = sectionData
         }
     }
+    
+    struct mappingInfo_libToMap{
+        var sogang = [String:String]()
+        var yonsei = [String:String]()
+        var ewha = [String:String]()
+        var hongik = [String:String]()
+        var error = "https://m.map.kakao.com/actions/searchView?q=xxxxxxxxxxxx"
+        init(){
+            self.sogang = ["로욜라도서관":"https://place.map.kakao.com/9102435","법학전문도서관":"https://place.map.kakao.com/23728235"]
+            self.yonsei = ["학술정보원":"https://place.map.kakao.com/8476510","법학도서관":"https://place.map.kakao.com/8476510","국학자료실":"https://place.map.kakao.com/8476510","음악대학도서실":"https://place.map.kakao.com/11102292","국제학도서관":"https://place.map.kakao.com/17808657","국학연구원도서실":"https://place.map.kakao.com/17556110","연합신학대학원도서관":"https://place.map.kakao.com/26348257","수학과도서실":"https://place.map.kakao.com/17555971"]
+            self.ewha = ["중앙도서관":"https://place.map.kakao.com/17806917","공학도서관":"https://place.map.kakao.com/26773294","법학도서관":"https://place.map.kakao.com/17806917","신학도서관":"https://place.map.kakao.com/17806917","음악도서관":"https://place.map.kakao.com/24582790"]
+            self.hongik = ["중앙도서관":"https://place.map.kakao.com/9605494","법학도서관":"https://place.map.kakao.com/17558523"]
+        }
+    }
+    
+    var mappingInfo_libTpMap = mappingInfo_libToMap()
     var tableViewData = [cellData]()
     var flag:Bool = true
     var allinfo:AllInfo?
@@ -94,21 +111,25 @@ class DetailViewController: UITableViewController {
                             if self.allinfo?.sogang.count ?? 0 > 0 {
                                 self.allinfo?.sogang.forEach{ book in
                                     self.tableViewData[0].sectionData.append(book)
+                                    self.tableViewData[0].univ = "sogang"//무의미
                                 }
                             }
                             if self.allinfo?.yonsei.count ?? 0 > 0 {
                                 self.allinfo?.yonsei.forEach{ book in
                                     self.tableViewData[1].sectionData.append(book)
+                                    self.tableViewData[1].univ = "yonsei"//무의미
                                 }
                             }
                             if self.allinfo?.ewha.count ?? 0 > 0 {
                                 self.allinfo?.ewha.forEach{ book in
                                     self.tableViewData[2].sectionData.append(book)
+                                    self.tableViewData[2].univ = "ewha"//무의미
                                 }
                             }
                             if self.allinfo?.hongik.count ?? 0 > 0 {
                                 self.allinfo?.hongik.forEach{ book in
                                     self.tableViewData[3].sectionData.append(book)
+                                    self.tableViewData[3].univ = "hongik"//무의미
                                 }
                             }
                             
@@ -159,6 +180,74 @@ class DetailViewController: UITableViewController {
         }
     }
     
+    //MARK : 위치정보가 담긴 라벨을 클릭하면 해당 도서관 위치를 나타내는 카카오 지도 사파리뷰를 열어주는 함수. sender에 속성값으로 section번호:어디학교인가? 와 location값 받아옴.
+    @objc func openKakaoMap(sender:MyTapGesture){
+        var parsedloc:String!
+        var urlString:String!
+        NSLog("Section Num : \(sender.univ_sectionNum)")
+        switch sender.univ_sectionNum{
+        case 0:
+            parsedloc = sender.location.components(separatedBy: " ")[0]
+            if parsedloc == "법학전문도서관" {
+                urlString = self.mappingInfo_libTpMap.sogang["법학전문도서관"] ?? self.mappingInfo_libTpMap.error
+            }
+            else{
+                urlString = self.mappingInfo_libTpMap.sogang["로욜라도서관"] ?? self.mappingInfo_libTpMap.error
+            }
+            ; break
+        case 1:
+            var tmp = sender.location.components(separatedBy:["]","/"])
+            NSLog("section1 univ parsed:"+tmp[0] + ":" + tmp[1] + ":" + tmp[2])
+            parsedloc = tmp[1]
+            if parsedloc == "학술정보원" || parsedloc == "법학도서관" || parsedloc == "국학자료실" { // 세곳은 모두 같은 건물에 있다.
+                urlString = self.mappingInfo_libTpMap.yonsei["학술정보원"] ?? self.mappingInfo_libTpMap.error
+            }
+            else if parsedloc == "음학대학도서실"{
+                urlString = self.mappingInfo_libTpMap.yonsei["음악대학도서실"] ?? self.mappingInfo_libTpMap.error
+            }
+            else if parsedloc == "국제학도서관"{
+                urlString = self.mappingInfo_libTpMap.yonsei["국제학도서관"] ?? self.mappingInfo_libTpMap.error
+            }
+            else if parsedloc == "국학연구원도서실"{
+                urlString = self.mappingInfo_libTpMap.yonsei["국학연구원도서실"] ?? self.mappingInfo_libTpMap.error
+            }
+            else if parsedloc == "연합신학대학원도서관"{
+                urlString = self.mappingInfo_libTpMap.yonsei["연합신학대학원도서관"] ?? self.mappingInfo_libTpMap.error
+            }
+            else if parsedloc == "수학과도서실"{
+                urlString = self.mappingInfo_libTpMap.yonsei["수학과도서실"] ?? self.mappingInfo_libTpMap.error
+            }; break
+        case 2:
+            var tmp = sender.location.components(separatedBy:["]","/"," "])
+            //NSLog("section2 univ parsed:"+tmp[0] + ":" + tmp[1])
+            parsedloc = tmp[0]
+            if parsedloc == "중앙도서관" || parsedloc == "법학도서관" || parsedloc == "신학도서관" { // 세곳은 모두 같은 건물에 있다.
+                urlString = self.mappingInfo_libTpMap.ewha["중앙도서관"] ?? self.mappingInfo_libTpMap.error
+            }
+            else if parsedloc == "공학도서관"{
+                urlString = self.mappingInfo_libTpMap.ewha["공학도서관"] ?? self.mappingInfo_libTpMap.error
+            }
+            else if parsedloc == "음악도서관"{
+                urlString = self.mappingInfo_libTpMap.ewha["음악도서관"] ?? self.mappingInfo_libTpMap.error
+            }; break
+        case 3:
+            var tmp = sender.location.components(separatedBy:["]","/"," "])
+            //NSLog("section3 univ parsed:"+tmp[0] + ":" + tmp[1])
+            parsedloc = tmp[0]
+            if parsedloc == "중앙도서관" {
+                urlString = self.mappingInfo_libTpMap.hongik["중앙도서관"] ?? self.mappingInfo_libTpMap.error
+            }
+            else if parsedloc == "법학도서관"{
+                urlString = self.mappingInfo_libTpMap.hongik["법학도서관"] ?? self.mappingInfo_libTpMap.error
+            };break
+        default:
+            NSLog("Sender Number is Invalid")
+            urlString = self.mappingInfo_libTpMap.error
+        }
+        let url = URL(string:urlString)!
+        let webVC = SFSafariViewController(url: url)
+        present(webVC, animated: true, completion: nil)
+    }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dataIndex = indexPath.row - 1
         if indexPath.row == 0 {
@@ -176,6 +265,13 @@ class DetailViewController: UITableViewController {
             guard let location = bookinfo.location, let callno = bookinfo.callno, let id = bookinfo.id, let returndate = bookinfo.returndate, let status = bookinfo.status else {
                 return cell
             }
+            
+            //label과 클릭이벤트 : 지도 띄워주기를 연결해주는 부분.
+            cell.location.isUserInteractionEnabled = true
+            let tappy = MyTapGesture(target: self, action: #selector(self.openKakaoMap))
+            tappy.location = "\(location)"
+            tappy.univ_sectionNum = indexPath.section
+            cell.location.addGestureRecognizer(tappy)
             
             cell.location.text = "\(location)"
             cell.callno.text = "\(callno)"
@@ -195,6 +291,7 @@ class DetailViewController: UITableViewController {
         }
     }
     
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
             if self.tableViewData[indexPath.section].opened == true {
@@ -218,4 +315,9 @@ extension UIColor {
         
         return UIColor(red: CGFloat(r / 255.0), green: CGFloat(g / 255.0), blue:CGFloat(b / 255.0), alpha: CGFloat(alpha))
     }
+}
+
+class MyTapGesture: UITapGestureRecognizer {
+    var location = String()
+    var univ_sectionNum = Int()
 }
