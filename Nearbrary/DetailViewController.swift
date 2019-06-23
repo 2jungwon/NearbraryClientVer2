@@ -63,7 +63,7 @@ class DetailViewController: UITableViewController {
         var error = "https://m.map.kakao.com/actions/searchView?q=xxxxxxxxxxxx"
         init(){
             self.sogang = ["로욜라도서관":"https://place.map.kakao.com/9102435","법학전문도서관":"https://place.map.kakao.com/23728235"]
-            self.yonsei = ["학술정보원":"https://place.map.kakao.com/8476510","법학도서관":"https://place.map.kakao.com/8476510","국학자료실":"https://place.map.kakao.com/8476510","음악대학도서실":"https://place.map.kakao.com/11102292","국제학도서관":"https://place.map.kakao.com/17808657","국학연구원도서실":"https://place.map.kakao.com/17556110","연합신학대학원도서관":"https://place.map.kakao.com/26348257","수학과도서실":"https://place.map.kakao.com/17555971"]
+            self.yonsei = ["학술정보원":"https://place.map.kakao.com/8476510","법학도서관":"https://place.map.kakao.com/17561869","국학자료실":"https://place.map.kakao.com/8476510","음악대학도서실":"https://place.map.kakao.com/11102292","국제학도서관":"https://place.map.kakao.com/17808657","국학연구원도서실":"https://place.map.kakao.com/17556110","연합신학대학원도서관":"https://place.map.kakao.com/26348257","수학과도서실":"https://place.map.kakao.com/17555971"]
             self.ewha = ["중앙도서관":"https://place.map.kakao.com/17806917","공학도서관":"https://place.map.kakao.com/26773294","법학도서관":"https://place.map.kakao.com/17806917","신학도서관":"https://place.map.kakao.com/17806917","음악도서관":"https://place.map.kakao.com/24582790"]
             self.hongik = ["중앙도서관":"https://place.map.kakao.com/9605494","법학도서관":"https://place.map.kakao.com/17558523"]
         }
@@ -199,8 +199,11 @@ class DetailViewController: UITableViewController {
             var tmp = sender.location.components(separatedBy:["]","/"])
             NSLog("section1 univ parsed:"+tmp[0] + ":" + tmp[1] + ":" + tmp[2])
             parsedloc = tmp[1]
-            if parsedloc == "학술정보원" || parsedloc == "법학도서관" || parsedloc == "국학자료실" { // 세곳은 모두 같은 건물에 있다.
+            if parsedloc == "학술정보원" || parsedloc == "국학자료실" { // 세곳은 모두 같은 건물에 있다.
                 urlString = self.mappingInfo_libTpMap.yonsei["학술정보원"] ?? self.mappingInfo_libTpMap.error
+            }
+            else if parsedloc == "법학도서관" {
+                urlString = self.mappingInfo_libTpMap.yonsei["법학도서관"] ?? self.mappingInfo_libTpMap.error
             }
             else if parsedloc == "음학대학도서실"{
                 urlString = self.mappingInfo_libTpMap.yonsei["음악대학도서실"] ?? self.mappingInfo_libTpMap.error
