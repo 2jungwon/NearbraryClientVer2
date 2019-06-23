@@ -23,6 +23,8 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         searchTextField.returnKeyType = .done
         searchTextField.delegate=self
+        self.navigationController?.isNavigationBarHidden = true
+        searchTextField.delegate=self
         // Do any additional setup after loading the view.
     }
     func textFieldShouldReturn(_ textField:UITextField) -> Bool{

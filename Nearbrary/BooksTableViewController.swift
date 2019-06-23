@@ -43,7 +43,8 @@ class BooksTableViewController: UITableViewController, XMLParserDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.navigationBar.tintColor = UIColor.darkGray
         if let title = queryText {
             titleNavigationItem.title = title
         }
@@ -189,6 +190,11 @@ class BooksTableViewController: UITableViewController, XMLParserDelegate {
             if let sendBook = selectBook {
                 detailVC.selectedBook = sendBook
             }
+        }
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        if (self.isMovingFromParent) {
+            self.navigationController?.isNavigationBarHidden = true
         }
     }
 }
