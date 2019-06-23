@@ -208,6 +208,7 @@ class DetailViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.isNavigationBarHidden = false
         booktitle.text = selectedBook?.title
         author.text = selectedBook?.author
         publisher.text = selectedBook?.publisher
