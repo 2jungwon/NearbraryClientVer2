@@ -78,6 +78,7 @@ class DetailViewController: UITableViewController {
     var tableViewData = [cellData]()
     var flag:Bool = true
     var allinfo:AllInfo?
+    var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
     func getBookInfoFromLibrary() {
         let lambda_url = "https://kw7eq88ls8.execute-api.ap-northeast-2.amazonaws.com/Prod/libinfo?isbn="
@@ -107,6 +108,8 @@ class DetailViewController: UITableViewController {
                         let allinfo = try JSONDecoder().decode(AllInfo.self, from: data)
                         
                         DispatchQueue.main.async {
+                            
+                            
                             self.allinfo = allinfo
                             print("\(self.allinfo?.sogang.count as Optional)")
                             print("\(self.allinfo?.yonsei.count as Optional)")
@@ -175,7 +178,10 @@ class DetailViewController: UITableViewController {
                                     self.tableViewData[3].univ = "hongik"//무의미
                                 }
                             }
+                            
+                            self.activityIndicator.stopAnimating()//스피너 종료.
                             self.coloring(status: self.hongik_status, flag: flag)
+                            
                             
                             self.tableView.reloadData()
                         }
@@ -228,7 +234,15 @@ class DetailViewController: UITableViewController {
             cellData(opened: false, title: "이화여자대학교", sectionData: []),
             cellData(opened: false, title: "홍익대학교", sectionData: [])
         ]
-        getBookInfoFromLibrary()
+        
+        //MARK : spinner 추가.
+        self.view.addSubview(self.activityIndicator)
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = UIActivityIndicatorView.Style.gray
+        self.activityIndicator.startAnimating()//lambda에 요청하기 전에 스피너 애니메이션 시작.
+        
+        getBookInfoFromLibrary()//내부에서 정보 다 가져오면 종료
     }
     
     override func didReceiveMemoryWarning() {
@@ -259,8 +273,11 @@ class DetailViewController: UITableViewController {
             if parsedloc.range(of:"법학전문도서관") != nil {
                 urlString = self.mappingInfo_libTpMap.sogang["법학전문도서관"] ?? self.mappingInfo_libTpMap.error
             }
-            else{
+            else if parsedloc.isEmpty != true{
                 urlString = self.mappingInfo_libTpMap.sogang["로욜라도서관"] ?? self.mappingInfo_libTpMap.error
+            }
+            else{
+                urlString = self.mappingInfo_libTpMap.error
             }
             ; break
         case 1:
@@ -287,6 +304,9 @@ class DetailViewController: UITableViewController {
             }
             else if parsedloc.contains("수학과도서실"){
                 urlString = self.mappingInfo_libTpMap.yonsei["수학과도서실"] ?? self.mappingInfo_libTpMap.error
+            }
+            else{
+                urlString = self.mappingInfo_libTpMap.error
             }; break
         case 2:
             var tmp = sender.location.components(separatedBy:["]","/"," "])
@@ -303,6 +323,9 @@ class DetailViewController: UITableViewController {
             }
             else if parsedloc.contains("음악도서관"){
                 urlString = self.mappingInfo_libTpMap.ewha["음악도서관"] ?? self.mappingInfo_libTpMap.error
+            }
+            else{
+                urlString = self.mappingInfo_libTpMap.error
             }; break
         case 3:
             var tmp = sender.location.components(separatedBy:["]","/"," "])
@@ -313,6 +336,9 @@ class DetailViewController: UITableViewController {
             }
             else if parsedloc.contains("법학도서관"){
                 urlString = self.mappingInfo_libTpMap.hongik["법학도서관"] ?? self.mappingInfo_libTpMap.error
+            }
+            else{
+                urlString = self.mappingInfo_libTpMap.error
             };break
         default:
             NSLog("Sender Number is Invalid")
