@@ -256,7 +256,7 @@ class DetailViewController: UITableViewController {
         switch sender.univ_sectionNum{
         case 0:
             parsedloc = sender.location.components(separatedBy: " ")[0]
-            if parsedloc == "법학전문도서관" {
+            if parsedloc.range(of:"법학전문도서관") != nil {
                 urlString = self.mappingInfo_libTpMap.sogang["법학전문도서관"] ?? self.mappingInfo_libTpMap.error
             }
             else{
@@ -267,48 +267,48 @@ class DetailViewController: UITableViewController {
             var tmp = sender.location.components(separatedBy:["]","/"])
             NSLog("section1 univ parsed:"+tmp[0] + ":" + tmp[1] + ":" + tmp[2])
             parsedloc = tmp[1]
-            if parsedloc == "학술정보원" || parsedloc == "국학자료실" { // 세곳은 모두 같은 건물에 있다.
+            if parsedloc.contains("학술정보원") || parsedloc.contains("국학자료실") { // 두 곳은 모두 같은 건물에 있다.
                 urlString = self.mappingInfo_libTpMap.yonsei["학술정보원"] ?? self.mappingInfo_libTpMap.error
             }
-            else if parsedloc == "법학도서관" {
+            else if parsedloc.contains("법학도서관") {
                 urlString = self.mappingInfo_libTpMap.yonsei["법학도서관"] ?? self.mappingInfo_libTpMap.error
             }
-            else if parsedloc == "음학대학도서실"{
+            else if parsedloc.contains("음악도서관"){
                 urlString = self.mappingInfo_libTpMap.yonsei["음악대학도서실"] ?? self.mappingInfo_libTpMap.error
             }
-            else if parsedloc == "국제학도서관"{
+            else if parsedloc.contains("국제학도서관"){
                 urlString = self.mappingInfo_libTpMap.yonsei["국제학도서관"] ?? self.mappingInfo_libTpMap.error
             }
-            else if parsedloc == "국학연구원도서실"{
+            else if parsedloc.contains("국학연구원도서실"){
                 urlString = self.mappingInfo_libTpMap.yonsei["국학연구원도서실"] ?? self.mappingInfo_libTpMap.error
             }
-            else if parsedloc == "연합신학대학원도서관"{
+            else if parsedloc.contains("연합신학대학원도서관"){
                 urlString = self.mappingInfo_libTpMap.yonsei["연합신학대학원도서관"] ?? self.mappingInfo_libTpMap.error
             }
-            else if parsedloc == "수학과도서실"{
+            else if parsedloc.contains("수학과도서실"){
                 urlString = self.mappingInfo_libTpMap.yonsei["수학과도서실"] ?? self.mappingInfo_libTpMap.error
             }; break
         case 2:
             var tmp = sender.location.components(separatedBy:["]","/"," "])
             //NSLog("section2 univ parsed:"+tmp[0] + ":" + tmp[1])
             parsedloc = tmp[0]
-            if parsedloc == "중앙도서관" || parsedloc == "법학도서관" || parsedloc == "신학도서관" { // 세곳은 모두 같은 건물에 있다.
+            if parsedloc.contains("중앙도서관") || parsedloc.contains("법학도서관") || parsedloc.contains("신학도서관") { // 세곳은 모두 같은 건물에 있다.
                 urlString = self.mappingInfo_libTpMap.ewha["중앙도서관"] ?? self.mappingInfo_libTpMap.error
             }
-            else if parsedloc == "공학도서관"{
+            else if parsedloc.contains("공학도서관"){
                 urlString = self.mappingInfo_libTpMap.ewha["공학도서관"] ?? self.mappingInfo_libTpMap.error
             }
-            else if parsedloc == "음악도서관"{
+            else if parsedloc.contains("음악도서관"){
                 urlString = self.mappingInfo_libTpMap.ewha["음악도서관"] ?? self.mappingInfo_libTpMap.error
             }; break
         case 3:
             var tmp = sender.location.components(separatedBy:["]","/"," "])
             //NSLog("section3 univ parsed:"+tmp[0] + ":" + tmp[1])
             parsedloc = tmp[0]
-            if parsedloc == "중앙도서관" {
+            if parsedloc.contains("중앙도서관"){
                 urlString = self.mappingInfo_libTpMap.hongik["중앙도서관"] ?? self.mappingInfo_libTpMap.error
             }
-            else if parsedloc == "법학도서관"{
+            else if parsedloc.contains("법학도서관"){
                 urlString = self.mappingInfo_libTpMap.hongik["법학도서관"] ?? self.mappingInfo_libTpMap.error
             };break
         default:
