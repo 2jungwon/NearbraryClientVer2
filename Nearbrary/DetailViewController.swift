@@ -118,7 +118,7 @@ class DetailViewController: UITableViewController {
                                 flag=0
                                 self.allinfo?.sogang.forEach{ book in
                                     if book.status == "대출중" {
-                                        flag=1
+                                        if flag < 2 {flag=1}
                                     }
                                     else if book.status == "대출가능" {
                                         flag=2
@@ -134,7 +134,7 @@ class DetailViewController: UITableViewController {
                                 flag=0
                                 self.allinfo?.yonsei.forEach{ book in
                                     if book.status == "대출중" {
-                                        flag=1
+                                        if flag < 2 {flag=1}
                                     }
                                     else if book.status == "대출가능" {
                                         flag=2
@@ -150,7 +150,7 @@ class DetailViewController: UITableViewController {
                                 flag=0
                                 self.allinfo?.ewha.forEach{ book in
                                     if book.status == "대출중" {
-                                        flag=1
+                                        if flag < 2 {flag=1}
                                     }
                                     else if book.status == "대출가능" {
                                         flag=2
@@ -166,7 +166,7 @@ class DetailViewController: UITableViewController {
                                 flag=0
                                 self.allinfo?.hongik.forEach{ book in
                                     if book.status == "대출중" {
-                                        flag=1
+                                        if flag < 2 {flag=1}
                                     }
                                     else if book.status == "대출가능" {
                                         flag=2
