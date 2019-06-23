@@ -273,7 +273,7 @@ class DetailViewController: UITableViewController {
             else if parsedloc.contains("법학도서관") {
                 urlString = self.mappingInfo_libTpMap.yonsei["법학도서관"] ?? self.mappingInfo_libTpMap.error
             }
-            else if parsedloc.contains("음학대학도서실"){
+            else if parsedloc.contains("음악도서관"){
                 urlString = self.mappingInfo_libTpMap.yonsei["음악대학도서실"] ?? self.mappingInfo_libTpMap.error
             }
             else if parsedloc.contains("국제학도서관"){
