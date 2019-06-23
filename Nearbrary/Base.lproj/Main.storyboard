@@ -347,7 +347,7 @@
                                                                                 </label>
                                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3vS-6z-4cA">
                                                                                     <rect key="frame" x="0.0" y="97" width="117.5" height="24.5"/>
-                                                                                    <state key="normal" title="상세 페이지 이동"/>
+                                                                                    <state key="normal" title="네이버 책 정보"/>
                                                                                     <connections>
                                                                                         <action selector="NaverLink:" destination="Oym-x4-NIf" eventType="touchUpInside" id="G3k-Z5-9up"/>
                                                                                     </connections>
@@ -647,6 +647,10 @@
                         <outlet property="ewha_status" destination="Z9q-97-Q8j" id="0zB-sf-yCI"/>
                         <outlet property="hongik_status" destination="nvA-ns-qNa" id="WYW-or-cKR"/>
                         <outlet property="isbn" destination="gbO-bk-qdC" id="6jX-Br-HkY"/>
+                        <outlet property="logo_ewha" destination="vKE-jw-vWp" id="3wU-a9-t1B"/>
+                        <outlet property="logo_hongik" destination="G40-cW-QiQ" id="eg6-DZ-nk2"/>
+                        <outlet property="logo_sogang" destination="3NH-jS-KbX" id="8PX-kt-llQ"/>
+                        <outlet property="logo_yonsei" destination="sXs-xM-onL" id="ziF-QR-Vhb"/>
                         <outlet property="pubdate" destination="Xll-II-5Fq" id="t0q-te-KBs"/>
                         <outlet property="publisher" destination="GSZ-SP-Pcw" id="0he-ui-LD7"/>
                         <outlet property="sogang_status" destination="0YE-f0-K6F" id="p3O-d4-wg5"/>

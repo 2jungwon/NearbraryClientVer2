@@ -31,11 +31,22 @@ class DetailViewController: UITableViewController {
     @IBOutlet var ewha_status: UILabel!
     @IBOutlet var hongik_status: UILabel!
     
+    @IBOutlet weak var logo_sogang: UIImageView!
+    @IBOutlet weak var logo_yonsei: UIImageView!
+    @IBOutlet weak var logo_ewha: UIImageView!
+    @IBOutlet weak var logo_hongik: UIImageView!
+    var lib_link_dictonary = [String:String]()
+    
     struct AllInfo: Decodable {
-        let sogang: [BookInfo]
-        let yonsei: [BookInfo]
-        let ewha: [BookInfo]
-        let hongik: [BookInfo]
+        let sogang: BookInfoWithLink
+        let yonsei: BookInfoWithLink
+        let ewha: BookInfoWithLink
+        let hongik: BookInfoWithLink
+    }
+    
+    struct BookInfoWithLink: Decodable{
+        let url:String?
+        let books:[BookInfo]
     }
     
     struct BookInfo: Decodable {
@@ -111,15 +122,17 @@ class DetailViewController: UITableViewController {
                             
                             
                             self.allinfo = allinfo
-                            print("\(self.allinfo?.sogang.count as Optional)")
-                            print("\(self.allinfo?.yonsei.count as Optional)")
-                            print("\(self.allinfo?.ewha.count as Optional)")
-                            print("\(self.allinfo?.hongik.count as Optional)")
+                            print("\(self.allinfo?.sogang.books.count as Optional)")
+                            print("\(self.allinfo?.yonsei.books.count as Optional)")
+                            print("\(self.allinfo?.ewha.books.count as Optional)")
+                            print("\(self.allinfo?.hongik.books.count as Optional)")
                             
                             var flag = -1
-                            if self.allinfo?.sogang.count ?? 0 > 0 {
+                            if self.allinfo?.sogang.books.count ?? 0 > 0 {
                                 flag=0
-                                self.allinfo?.sogang.forEach{ book in
+                                NSLog("Library url : \(allinfo.sogang.url ?? "None")")
+                                self.lib_link_dictonary["url_sogangLib"] = allinfo.sogang.url ?? "http://library.sogang.ac.kr/search/tot/result?st=EXCT&si=TOTAL&q=xxxxxx"
+                                self.allinfo?.sogang.books.forEach{ book in
                                     if book.status == "대출중" {
                                         if flag < 2 {flag=1}
                                     }
@@ -133,9 +146,11 @@ class DetailViewController: UITableViewController {
                             self.coloring(status: self.sogang_status, flag: flag)
                             
                             flag = -1
-                            if self.allinfo?.yonsei.count ?? 0 > 0 {
+                            if self.allinfo?.yonsei.books.count ?? 0 > 0 {
                                 flag=0
-                                self.allinfo?.yonsei.forEach{ book in
+                                NSLog("Library url : \(allinfo.yonsei.url ?? "None")")
+                                self.lib_link_dictonary["url_yonseiLib"] = allinfo.yonsei.url ?? "http://library.sogang.ac.kr/search/tot/result?st=EXCT&si=TOTAL&q=xxxxxx"
+                                self.allinfo?.yonsei.books.forEach{ book in
                                     if book.status == "대출중" {
                                         if flag < 2 {flag=1}
                                     }
@@ -149,9 +164,11 @@ class DetailViewController: UITableViewController {
                             self.coloring(status: self.yonsei_status, flag: flag)
                             
                             flag = -1
-                            if self.allinfo?.ewha.count ?? 0 > 0 {
+                            if self.allinfo?.ewha.books.count ?? 0 > 0 {
                                 flag=0
-                                self.allinfo?.ewha.forEach{ book in
+                                NSLog("Library url : \(allinfo.ewha.url ?? "None")")
+                                self.lib_link_dictonary["url_ewhaLib"] = allinfo.ewha.url ?? "http://library.sogang.ac.kr/search/tot/result?st=EXCT&si=TOTAL&q=xxxxxx"
+                                self.allinfo?.ewha.books.forEach{ book in
                                     if book.status == "대출중" {
                                         if flag < 2 {flag=1}
                                     }
@@ -165,9 +182,11 @@ class DetailViewController: UITableViewController {
                             self.coloring(status: self.ewha_status, flag: flag)
                             
                             flag = -1
-                            if self.allinfo?.hongik.count ?? 0 > 0 {
+                            if self.allinfo?.hongik.books.count ?? 0 > 0 {
                                 flag=0
-                                self.allinfo?.hongik.forEach{ book in
+                                NSLog("Library url : \(allinfo.hongik.url ?? "None")")
+                                self.lib_link_dictonary["url_hongikLib"] = allinfo.hongik.url ?? "http://library.sogang.ac.kr/search/tot/result?st=EXCT&si=TOTAL&q=xxxxxx"
+                                self.allinfo?.hongik.books.forEach{ book in
                                     if book.status == "대출중" {
                                         if flag < 2 {flag=1}
                                     }
@@ -182,7 +201,10 @@ class DetailViewController: UITableViewController {
                             self.activityIndicator.stopAnimating()//스피너 종료.
                             self.coloring(status: self.hongik_status, flag: flag)
                             
-                            
+                            self.UnivLogoGestureInit(status: self.logo_sogang, url:allinfo.sogang.url)
+                            self.UnivLogoGestureInit(status: self.logo_yonsei,url:allinfo.yonsei.url)
+                            self.UnivLogoGestureInit(status: self.logo_ewha, url:allinfo.ewha.url)
+                            self.UnivLogoGestureInit(status: self.logo_hongik, url:allinfo.hongik.url)
                             self.tableView.reloadData()
                         }
                     } catch let jsonErr {
@@ -190,6 +212,25 @@ class DetailViewController: UITableViewController {
                     }
                 }
             }.resume()
+        }
+    }
+    
+    func UnivLogoGestureInit(status: UIImageView, url:String?){
+        status.isUserInteractionEnabled = true
+        let tappy = UnivLogoTapGesture(target: self, action: #selector(self.openUnivLibpage))
+        tappy.url = (url ?? nil)!
+        status.addGestureRecognizer(tappy)
+    }
+    
+    @objc func openUnivLibpage(sender:UnivLogoTapGesture){
+        if sender.url != ""{
+            self.openSafariView(urlString: sender.url)
+        }
+        else{
+            let alert = UIAlertController(title: "해당 도서는 비치되어 있지 않습니다.", message: "", preferredStyle: UIAlertController.Style.alert)
+            let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default,handler : nil )
+            alert.addAction(okAction)
+            present(alert, animated: true, completion: nil)
         }
     }
     
@@ -262,6 +303,7 @@ class DetailViewController: UITableViewController {
             return 1
         }
     }
+    
     
     //MARK : 위치정보가 담긴 라벨을 클릭하면 해당 도서관 위치를 나타내는 카카오 지도 사파리뷰를 열어주는 함수. sender에 속성값으로 section번호:어디학교인가? 와 location값 받아옴.
     @objc func openKakaoMap(sender:MyTapGesture){
@@ -345,9 +387,10 @@ class DetailViewController: UITableViewController {
             NSLog("Sender Number is Invalid")
             urlString = self.mappingInfo_libTpMap.error
         }
-        let url = URL(string:urlString)!
-        let webVC = SFSafariViewController(url: url)
-        present(webVC, animated: true, completion: nil)
+//        let url = URL(string:urlString)!
+//        let webVC = SFSafariViewController(url: url)
+//        present(webVC, animated: true, completion: nil)
+        openSafariView(urlString: urlString)
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dataIndex = indexPath.row - 1
@@ -406,6 +449,12 @@ class DetailViewController: UITableViewController {
             }
         }
     }
+    
+    func openSafariView(urlString:String){
+        let url = URL(string:urlString)!
+        let webVC = SFSafariViewController(url: url)
+        present(webVC, animated: true, completion: nil)
+    }
 }
 
 extension UIColor {
@@ -421,4 +470,8 @@ extension UIColor {
 class MyTapGesture: UITapGestureRecognizer {
     var location = String()
     var univ_sectionNum = Int()
+}
+
+class UnivLogoTapGesture: UITapGestureRecognizer{
+    var url = String()
 }
