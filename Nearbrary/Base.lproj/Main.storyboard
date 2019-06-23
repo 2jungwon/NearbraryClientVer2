@@ -399,7 +399,7 @@
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="대출가능" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0YE-f0-K6F">
                                                     <rect key="frame" x="0.0" y="88" width="80" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -416,7 +416,7 @@
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="대출가능" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pj5-JV-FX8">
                                                     <rect key="frame" x="0.0" y="88" width="80" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -433,7 +433,7 @@
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="대출가능" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z9q-97-Q8j">
                                                     <rect key="frame" x="0.0" y="88" width="80" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -450,7 +450,7 @@
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="대출가능" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nvA-ns-qNa">
                                                     <rect key="frame" x="0.0" y="88" width="80" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -653,9 +653,13 @@
                         <outlet property="author" destination="uNQ-GY-MB0" id="yuU-yf-LjP"/>
                         <outlet property="bookImageView" destination="1Yi-6N-5Io" id="aZN-r4-t2S"/>
                         <outlet property="booktitle" destination="oJQ-XM-TaY" id="X3R-Fr-iJR"/>
+                        <outlet property="ewha_status" destination="Z9q-97-Q8j" id="0zB-sf-yCI"/>
+                        <outlet property="hongik_status" destination="nvA-ns-qNa" id="WYW-or-cKR"/>
                         <outlet property="isbn" destination="gbO-bk-qdC" id="6jX-Br-HkY"/>
                         <outlet property="pubdate" destination="Xll-II-5Fq" id="t0q-te-KBs"/>
                         <outlet property="publisher" destination="GSZ-SP-Pcw" id="0he-ui-LD7"/>
+                        <outlet property="sogang_status" destination="0YE-f0-K6F" id="p3O-d4-wg5"/>
+                        <outlet property="yonsei_status" destination="Pj5-JV-FX8" id="2fu-zL-aTY"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SFe-nk-yms" userLabel="First Responder" sceneMemberID="firstResponder"/>

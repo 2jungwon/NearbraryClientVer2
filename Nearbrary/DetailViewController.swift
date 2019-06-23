@@ -26,6 +26,11 @@ class DetailViewController: UITableViewController {
         present(webVC, animated: true, completion: nil)
     }
     
+    @IBOutlet var sogang_status: UILabel!
+    @IBOutlet var yonsei_status: UILabel!
+    @IBOutlet var ewha_status: UILabel!
+    @IBOutlet var hongik_status: UILabel!
+    
     struct AllInfo: Decodable {
         let sogang: [BookInfo]
         let yonsei: [BookInfo]
@@ -91,26 +96,65 @@ class DetailViewController: UITableViewController {
                             print("\(self.allinfo?.ewha.count as Optional)")
                             print("\(self.allinfo?.hongik.count as Optional)")
                             
+                            var flag = -1
                             if self.allinfo?.sogang.count ?? 0 > 0 {
+                                flag=0
                                 self.allinfo?.sogang.forEach{ book in
+                                    if book.status == "대출중" {
+                                        flag=1
+                                    }
+                                    else if book.status == "대출가능" {
+                                        flag=2
+                                    }
                                     self.tableViewData[0].sectionData.append(book)
                                 }
                             }
+                            self.coloring(status: self.sogang_status, flag: flag)
+                            
+                            flag = -1
                             if self.allinfo?.yonsei.count ?? 0 > 0 {
+                                flag=0
                                 self.allinfo?.yonsei.forEach{ book in
+                                    if book.status == "대출중" {
+                                        flag=1
+                                    }
+                                    else if book.status == "대출가능" {
+                                        flag=2
+                                    }
                                     self.tableViewData[1].sectionData.append(book)
                                 }
                             }
+                            self.coloring(status: self.yonsei_status, flag: flag)
+                            
+                            flag = -1
                             if self.allinfo?.ewha.count ?? 0 > 0 {
+                                flag=0
                                 self.allinfo?.ewha.forEach{ book in
+                                    if book.status == "대출중" {
+                                        flag=1
+                                    }
+                                    else if book.status == "대출가능" {
+                                        flag=2
+                                    }
                                     self.tableViewData[2].sectionData.append(book)
                                 }
                             }
+                            self.coloring(status: self.ewha_status, flag: flag)
+                            
+                            flag = -1
                             if self.allinfo?.hongik.count ?? 0 > 0 {
+                                flag=0
                                 self.allinfo?.hongik.forEach{ book in
+                                    if book.status == "대출중" {
+                                        flag=1
+                                    }
+                                    else if book.status == "대출가능" {
+                                        flag=2
+                                    }
                                     self.tableViewData[3].sectionData.append(book)
                                 }
                             }
+                            self.coloring(status: self.hongik_status, flag: flag)
                             
                             self.tableView.reloadData()
                         }
@@ -119,6 +163,25 @@ class DetailViewController: UITableViewController {
                     }
                 }
             }.resume()
+        }
+    }
+    
+    func coloring(status: UILabel, flag: Int) {
+        if flag < 0 {
+            status.text = "책없음"
+            status.textColor = UIColor.black
+        }
+        else if flag == 1 {
+            status.text = "대출중"
+            status.textColor = UIColor.orange
+        }
+        else if flag == 2 {
+            status.text = "대출가능"
+            status.textColor = UIColor.colorWithRGBHex(hex: 0x00994c, alpha: 1.0)
+        }
+        else {
+            status.text = "대출불가"
+            status.textColor = UIColor.red
         }
     }
     
@@ -132,6 +195,11 @@ class DetailViewController: UITableViewController {
         isbn.text = cut_isbn?[1]
         //link.text = selectedBook?.link
         bookImageView.image = selectedBook?.image
+        
+        sogang_status.textColor = UIColor.white
+        yonsei_status.textColor = UIColor.white
+        ewha_status.textColor = UIColor.white
+        hongik_status.textColor = UIColor.white
         
         tableViewData = [
             cellData(opened: false, title: "서강대학교", sectionData: []),
