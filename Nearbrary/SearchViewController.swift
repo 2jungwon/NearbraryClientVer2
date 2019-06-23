@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, UITextFieldDelegate {
     
 
     @IBOutlet var searchTextField: UITextField!
@@ -21,16 +21,24 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchTextField.returnKeyType = .done
+        searchTextField.delegate=self
         // Do any additional setup after loading the view.
     }
-    
+    func textFieldShouldReturn(_ textField:UITextField) -> Bool{
+        self.view.endEditing(true)
+        searchButtonPressed(self)
+        return false
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+        self.view.endEditing(true)
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if let booksVC = segue.destination as? BooksTableViewController {
             if let text = searchTextField.text {
                 booksVC.queryText = text
